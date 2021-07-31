@@ -1,0 +1,11 @@
+public
+node_modules
+themes
+*.yml
+db.json
+package-lock.json
+package.json
+yarn.lock
+.deploy_git
+.github
+.npmignore
