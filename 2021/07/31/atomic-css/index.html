@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		
+<title>使用CSS原子类来简化样式代码-Cola</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+
+<meta name="keywords" content="CSS,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+	<meta name="generator" content="Hexo 5.4.0"></head>
+
+	<body>
+		
+<link rel="stylesheet" href="/css/page.css">
+
+
+<link rel="stylesheet" href="/css/page_cente.css">
+
+
+<link rel="stylesheet" href="/css/atom-one-dark.css">
+
+
+<link rel="stylesheet" href="/css/header.css">
+
+	<div class="header">
+		<div class="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										主页
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										归档
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										分类
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										标签
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										友链
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										关于
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>Cola</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/links">友链</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'
+    style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'>
+</div>
+<style>
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $(function () { $('.h-right-close>svg').click(function () { $('.sidebar').animate({ width: "66%" }, 500); $('.shelter').fadeIn("slow") }); $('.shelter').click(function (e) { $('.sidebar').animate({ width: "0" }, 500); $('.shelter').fadeOut("slow") }) })
+</script>
+		<script>
+			$(function () { $(window).scroll(function () { if ($(document).scrollTop() > 100) { $(".header-top").removeClass("header-move2"); $('.header-top').addClass('header-move1') } else { $(".header-top").removeClass("header-move1"); $('.header-top').addClass('header-move2') } }) });
+		</script>
+<div class="header-bg ">
+    <div class="bg-content">
+        <ul class="tag">
+            
+            
+            <li><a href="/tags/CSS">CSS</a></li>
+            
+            
+        </ul>
+        <h1>使用CSS原子类来简化样式代码</h1>
+        <div class="article-info">
+            <div class="article-author">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <g>
+                        <path fill="#12183A"
+                            d="M6.187 15.265A6.47 6.47 0 0 0 10 16.5a6.47 6.47 0 0 0 3.813-1.235A4.99 4.99 0 0 0 10 13.5a4.99 4.99 0 0 0-3.813 1.765zM5.082 14.25A6.485 6.485 0 0 1 10 12c1.965 0 3.726.872 4.918 2.25a6.5 6.5 0 1 0-9.836 0zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z">
+                        </path>
+                    </g>
+                </svg>
+                
+                <span> <a href="">Cola</a></span>
+                <p>2021-07-31 17:54:37</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="article-content">
+    <div id="article" class="content">
+        <blockquote>
+<p>CSS原子类并不是什么新的特性，也不是什么预编译SCSS或LESS的语法，而是一种写法，其特点就是一个类名对应一个样式，从而通过在标签上附加不同的类名来生成对应的效果，可以有效的减少CSS的相关代码。</p>
+</blockquote>
+<h3 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h3><p>写CSS的方法有很多种，可以通过比较流行的<code>BEM</code>命名规范来写，可以通过<code>SCSS</code>或<code>LESS</code>等预编译编写，但也有一种当下比较火的写法：原子CSS。<br>我们说了，CSS原子类只是一种特别的写法，那么我们就可以很轻松的实现一个原子类，例如：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.flex</span> &#123;<br>    <span class="hljs-attribute">display</span>: flex;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的<code>.flex</code>就是一个原子类，它的特点就是<strong>一个类名对应一个CSS规则，并且命名应该是和规则有关系的</strong>，使用的话，直接在标签里插入样式：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><code class="hljs angelscript">&lt;ul <span class="hljs-keyword">class</span>=&quot;<span class="hljs-symbol">flex</span>&quot;&gt;<br>    &lt;<span class="hljs-symbol">li</span>&gt;<span class="hljs-symbol">1</span>&lt;/<span class="hljs-symbol">li</span>&gt;<br>    &lt;<span class="hljs-symbol">li</span>&gt;<span class="hljs-symbol">2</span>&lt;/<span class="hljs-symbol">li</span>&gt;<br>    &lt;<span class="hljs-symbol">li</span>&gt;<span class="hljs-symbol">3</span>&lt;/<span class="hljs-symbol">li</span>&gt;<br>&lt;/<span class="hljs-symbol">ul</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<p>这样的话，<code>ul</code>这个标签就具有<code>flex</code>布局了。倘若我们组织的原子类足够多的话，我们就可以通过直接在标签里写原子类完成布局了：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-class">.flex</span> &#123; diaplay: <span class="hljs-attribute">flex</span>; &#125;<br><span class="hljs-selector-class">.flex-col</span> &#123; <span class="hljs-attribute">flex</span>-direcotrion: column; &#125;<br><span class="hljs-selector-class">.flex-row-center</span> &#123; <span class="hljs-attribute">justify-content</span>: center; &#125;<br><span class="hljs-selector-class">.flex-col-center</span> &#123; <span class="hljs-attribute">align-items</span>: center; &#125;<br><span class="hljs-selector-class">.p-15</span> &#123; <span class="hljs-attribute">padding</span>: <span class="hljs-number">15px</span>; &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex flex-col flex-row-center flex-col-center p-15&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这就是CSS原子类的写法，非常的简单，因为一个类名对应一个规则，所以我们往往需要大量的工具类，这就造成了它特点。</p>
+<h3 id="坏处"><a href="#坏处" class="headerlink" title="坏处"></a>坏处</h3><p>CSS原子类还是有一些缺点的：</p>
+<ol>
+<li> 因为可能定制了一大堆工具类，这些使用的话需要开发人员的熟悉；</li>
+<li> 虽然减少了CSS的代码，但是使得HTML的代码变得更臃肿了；</li>
+<li> CSS 规则插入顺序仍然很重要。</li>
+</ol>
+<h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><p>当然我认为原子类的好处还是大于坏处的：</p>
+<ol>
+<li> 写法真的变简单了，比如添加一个常用的规则时，直接就加原子类，而不是定义一个类名，再去<code>style</code>里面写样式；</li>
+<li> 因为原子类是定义的公共类，所以当我们移动一段标签到其他页面时，样式也就是有的，以前的话还需要拷贝样式，当然有组件概念后，这个到不是什么问题；</li>
+<li> 当我们使用原子类的时候，我们修改页面的样式时往往不会再去修改<code>CSS</code>代码了，而是直接修改原子类名，这一点是不是和以前修改按钮时编写<code>btn-primary</code>一样？因为，已经有了基于原子类这种写法的<code>CSS</code>框架了，例如<a target="_blank" rel="noopener" href="https://www.tailwindcss.cn/">tailwindcss</a>。</li>
+</ol>
+<h3 id="tailwindcss"><a href="#tailwindcss" class="headerlink" title="tailwindcss"></a>tailwindcss</h3><p><code>tailwindcss</code>是什么？摘自官网一段引用过：</p>
+<blockquote>
+<p>Tailwind CSS 是一个功能类优先的 CSS 框架，它集成了诸如 <code>flex</code>, <code>pt-4</code>, <code>text-center</code> 和 <code>rotate-90</code> 这样的的类，它们能直接在脚本标记语言中组合起来，构建出任何设计。</p>
+</blockquote>
+<p>是不是就是CSS原子类的写法了？当然，<code>tailwindcss</code>不止于此，它还有很多强大的功能和配置，有兴趣的可以去看看，我这里就试一下其原子类的功能：</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>请查看：<a target="_blank" rel="noopener" href="https://www.tailwindcss.cn/docs/installation">tailwindcss的安装文档</a></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>安装好之后，我们就可以在标签上通过原子类来编写样式了，但是有一个前提就是我们得熟悉<code>tailwindcss</code>的原子类规则了，这也就是前面说的一个缺点所在，我简单基于Vue写一个Demo：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d4525ad5bcd64fe4bb6be6e97f115606~tplv-k3u1fbpfcp-watermark.image" alt="niced.gif"></p>
+<p>上面效果，一行CSS都不写，完全依靠<code>tailwindcss</code>提供的工具类：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mx-auto flex p-2 w-full border border-solid border-gray-500 rounded&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hidden sm:inline&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;Vue logo&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./assets/logo.png&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ml-5 flex flex flex-col&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;flex flex-col items-center ss:flex-row ss:justify-between ss:items-baseline&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xl&quot;</span>&gt;</span>这是一篇文章的标题<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-xs&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mr-5&quot;</span>&gt;</span>作者：作者名<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>2021-07-27<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-2&quot;</span>&gt;</span><br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>          这是文章的内容这是文章的内容这是文章的内容这是文章的内容这是文章的内容<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="自定义工具类"><a href="#自定义工具类" class="headerlink" title="自定义工具类"></a>自定义工具类</h3><p>像<code>tailwindcss</code>这类框架，是非常的强大的，有许多的功能，而我们可能只想就用用一些常用的工具类的话，尽管<code>tailwindcss</code>在生产环境可以压缩优化，但是那一堆配置还是挺难记得。所以，我们可以自定义一些工具类，方便自己来使用，例如我就利用<code>SCSS</code>自定义了一些公共工具类：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><code class="hljs scss"><span class="hljs-selector-tag">ul</span> &#123; <span class="hljs-attribute">list-style</span>: none; &#125;<br>* &#123; <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>; <span class="hljs-attribute">box-sizing</span>: border-box; &#125;<br><br><span class="hljs-keyword">@for</span> <span class="hljs-variable">$i</span> from <span class="hljs-number">10</span> through <span class="hljs-number">60</span> &#123;<br>  <span class="hljs-selector-class">.fs-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">font-size</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.pl-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-left</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.pt-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-top</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.pr-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-right</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.pb-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.px-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-left</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; <span class="hljs-attribute">padding-right</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.py-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding-top</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.p-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">padding</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.ml-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-left</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.mt-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-top</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.mr-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-right</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.mb-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.mx-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-left</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; <span class="hljs-attribute">margin-right</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.my-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin-top</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>  <span class="hljs-selector-class">.m-</span>#&#123;<span class="hljs-variable">$i</span>&#125; &#123; <span class="hljs-attribute">margin</span>: <span class="hljs-variable">$i</span> * <span class="hljs-number">1</span>rpx; &#125;<br>&#125;<br><br><span class="hljs-variable">$colors</span>: <span class="hljs-number">#000</span>, <span class="hljs-number">#333</span>, <span class="hljs-number">#666</span>, <span class="hljs-number">#999</span>, <span class="hljs-number">#ccc</span>, <span class="hljs-number">#ddd</span>, <span class="hljs-number">#eee</span>, <span class="hljs-number">#fff</span>, <span class="hljs-number">#1E90FF</span>, <span class="hljs-number">#00BFFF</span>	;<br><span class="hljs-variable">$colorName</span>: <span class="hljs-string">&#x27;000&#x27;</span>, <span class="hljs-string">&#x27;333&#x27;</span>, <span class="hljs-string">&#x27;666&#x27;</span>, <span class="hljs-string">&#x27;999&#x27;</span>, <span class="hljs-string">&#x27;ccc&#x27;</span>, <span class="hljs-string">&#x27;ddd&#x27;</span>, <span class="hljs-string">&#x27;eee&#x27;</span>, <span class="hljs-string">&#x27;fff&#x27;</span>, <span class="hljs-string">&#x27;0ff&#x27;</span>, <span class="hljs-string">&#x27;bff&#x27;</span>;<br><br><span class="hljs-keyword">@for</span> <span class="hljs-variable">$i</span> from <span class="hljs-number">1</span> through length(<span class="hljs-variable">$colors</span>) &#123;<br>  <span class="hljs-variable">$color</span>: nth(<span class="hljs-variable">$colors</span>, <span class="hljs-variable">$i</span>);<br>  <span class="hljs-variable">$name</span>: nth(<span class="hljs-variable">$colorName</span>, <span class="hljs-variable">$i</span>);<br>  <span class="hljs-selector-class">.color-</span>#&#123;<span class="hljs-variable">$name</span>&#125; &#123; <span class="hljs-attribute">color</span>: <span class="hljs-variable">$color</span>; &#125;<br>  <span class="hljs-selector-class">.bg-</span>#&#123;<span class="hljs-variable">$name</span>&#125; &#123; <span class="hljs-attribute">background-color</span>: <span class="hljs-variable">$color</span>;&#125;<br>  <span class="hljs-selector-class">.bc-</span>#&#123;<span class="hljs-variable">$name</span>&#125; &#123; <span class="hljs-attribute">border-color</span>: <span class="hljs-variable">$color</span> <span class="hljs-meta">!important</span>;&#125;<br>&#125;<br><br><span class="hljs-selector-class">.flex</span> &#123; <span class="hljs-attribute">display</span>: flex; &#125;<br><span class="hljs-selector-class">.flex-1</span> &#123; <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>; &#125;<br><span class="hljs-selector-class">.flex-2</span> &#123; <span class="hljs-attribute">flex</span>: <span class="hljs-number">2</span>; &#125;<br><span class="hljs-selector-class">.flex-3</span> &#123; <span class="hljs-attribute">flex</span>: <span class="hljs-number">3</span>; &#125;<br><span class="hljs-selector-class">.flex-col</span> &#123; <span class="hljs-attribute">flex-direction</span>: column; &#125;<br><span class="hljs-selector-class">.flex-row-start</span> &#123; <span class="hljs-attribute">justify-content</span>: flex-start; &#125;<br><span class="hljs-selector-class">.flex-row-center</span> &#123; <span class="hljs-attribute">justify-content</span>: center; &#125;<br><span class="hljs-selector-class">.flex-row-end</span> &#123; <span class="hljs-attribute">justify-content</span>: flex-end; &#125;<br><span class="hljs-selector-class">.flex-row-between</span> &#123; <span class="hljs-attribute">justify-content</span>: space-between; &#125;<br><span class="hljs-selector-class">.flex-col-start</span> &#123; <span class="hljs-attribute">align-items</span>: flex-start; &#125;<br><span class="hljs-selector-class">.flex-col-center</span> &#123; <span class="hljs-attribute">align-items</span>: center; &#125;<br><span class="hljs-selector-class">.flex-col-end</span> &#123; <span class="hljs-attribute">align-items</span>: flex-end; &#125;<br><span class="hljs-selector-class">.flex-col-baseline</span> &#123; <span class="hljs-attribute">align-items</span>: baseline; &#125;<br><br><span class="hljs-selector-class">.p-relative</span> &#123; <span class="hljs-attribute">position</span>: relative; &#125;<br><span class="hljs-selector-class">.p-absolute</span> &#123; <span class="hljs-attribute">position</span>: absolute; &#125;<br><span class="hljs-selector-class">.p-fixed</span> &#123; <span class="hljs-attribute">position</span>: fixed; &#125;<br><span class="hljs-selector-class">.l-0</span> &#123; <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>; &#125;<br><span class="hljs-selector-class">.t-0</span> &#123; <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>; &#125;<br><span class="hljs-selector-class">.r-0</span> &#123; <span class="hljs-attribute">right</span>:<span class="hljs-number">0</span>; &#125;<br><span class="hljs-selector-class">.b-0</span> &#123; <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>; &#125;<br><span class="hljs-selector-class">.w-100</span> &#123; <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; &#125;<br><span class="hljs-selector-class">.w-100i</span> &#123; <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span> <span class="hljs-meta">!important</span>; &#125;<br><span class="hljs-selector-class">.h-100</span> &#123; <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>; &#125;<br><span class="hljs-selector-class">.h-100i</span> &#123; <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span> <span class="hljs-meta">!important</span>; &#125;<br><span class="hljs-selector-class">.vh-100</span> &#123; <span class="hljs-attribute">height</span>: <span class="hljs-number">100vh</span>; &#125;<br><span class="hljs-selector-class">.fw-bold</span> &#123; <span class="hljs-attribute">font-weight</span>: bold; &#125;<br><br><span class="hljs-selector-class">.mx-auto</span> &#123; <span class="hljs-attribute">margin-left</span>: auto; <span class="hljs-attribute">margin-right</span>: auto; &#125;<br><br><span class="hljs-selector-class">.bb-1</span> &#123; <span class="hljs-attribute">border-bottom</span>: <span class="hljs-number">1px</span> solid; &#125;<br><span class="hljs-selector-class">.bt-1</span> &#123; <span class="hljs-attribute">border-top</span>: <span class="hljs-number">1px</span> solid; &#125;<br><span class="hljs-selector-class">.scroll-y</span> &#123; <span class="hljs-attribute">overflow-y</span>: auto; &#125;<br><span class="hljs-selector-class">.scroll-x</span> &#123; <span class="hljs-attribute">overflow-x</span>: auto; &#125;<br><br><span class="hljs-selector-class">.z-1</span> &#123; <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>; &#125;<br><span class="hljs-selector-class">.z-2</span> &#123; <span class="hljs-attribute">z-index</span>: <span class="hljs-number">2</span>; &#125;<br><span class="hljs-selector-class">.z-3</span> &#123; <span class="hljs-attribute">z-index</span>: <span class="hljs-number">3</span>; &#125;<br></code></pre></td></tr></table></figure>
+<p>这样，一来是我们自己定义的好记，而来体积也并不大，方便开发。我上面定义的类，不全是CSS原子类，像<code>.bb-1</code>这种我就是组合的，这样也可以在标签里少写一点。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>已有前辈总结其特点：</p>
+<blockquote>
+<p>需要<strong>预先开发好</strong>一个不错的实用工具/原子样式表，然后才能开始开发新功能。<br>如果实用工具/原子 CSS 是由别人制作的，你将不得不首先学习类命名约定(即使你知道 CSS 的一切)。这种约定是<strong>有主观性</strong>的，很可能你不喜欢它。<br>有时，你需要一些<strong>额外的 CSS</strong>，而实用工具/原子 CSS 并不提供这些 CSS。没有约定好的方法来提供这些一次性样式。</p>
+</blockquote>
+<p>个人认为的话，CSS原子类和以前在<code>style</code>里面写样式并不冲突，可能因为我的项目都是一个人，所以自己也没有啥规范约束，自己两者都混合用，开发起来，觉得真的挺方便的。  </p>
+<p>这个写法最初还是一个姑娘介绍给我的，当时我还觉得烦，现在好想念。</p>
+
+    </div>
+</div>
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 109;
+        width: 600px !important;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            width: 88%
+        }
+    }
+</style>
+<script>
+    $(function () { $('#article').click(function (e) { if (e.target.tagName == "IMG") { if ($('#nonediv').length == 0) { let MImg = `<div id='noneimg'><img src='${e.target.currentSrc}'></div>`; let MDiv = "<div id='nonediv' style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'></div>"; $('#article').append(MDiv); $('#article').append(MImg); $("#nonediv").fadeIn("slow"); $("#noneimg img").fadeIn("slow") } } else { if ($('#nonediv').length !== 0) { $("#noneimg ").fadeOut("slow"); $("#nonediv").fadeOut("slow"); setTimeout(function () { $('#nonediv').remove(); $('#noneimg').remove() }, 500) } } }); $('.article-content').addClass('content-move') });
+</script>
+<div class="Last-Next">
+    
+    <a href="/2021/07/31/github-page/">
+        <div class="last">
+            <span>上一篇</span>
+            <p>来弄一个Github的个人介绍页吧~</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2021/07/31/addeventlistener/">
+        <div class="next">
+            <span>下一篇</span>
+            <p>关于通过addEventListener添加事件监听的一些踩坑笔记</p>
+        </div>
+    </a>
+    
+</div>
+		
+<link rel="stylesheet" href="/css/food.css">
+
+<div class="footer">
+	<div class="Copyright">
+		©2021 By Cola. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Aizener">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: block;
+            border-radius: 50%;
+            width: 66px;
+            height: 66px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            transition: border .5s;
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 30px;
+            height: 30px;
+            margin-top: 17.5px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $('#js-go_top').gotoTop({ offset: 500, speed: 300, animationShow: { 'transform': 'translate(0,0)', 'transition': 'transform .5s ease-in-out' }, animationHide: { 'transform': 'translate(100px,0)', 'transition': 'transform .5s ease-in-out' } });
+</script>
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+
+</html>

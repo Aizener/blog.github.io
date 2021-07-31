@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		
+<title>Vue3的Composition简介-Cola</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+
+<meta name="keywords" content="Vue,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+	<meta name="generator" content="Hexo 5.4.0"></head>
+
+	<body>
+		
+<link rel="stylesheet" href="/css/page.css">
+
+
+<link rel="stylesheet" href="/css/page_cente.css">
+
+
+<link rel="stylesheet" href="/css/atom-one-dark.css">
+
+
+<link rel="stylesheet" href="/css/header.css">
+
+	<div class="header">
+		<div class="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										主页
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										归档
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										分类
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										标签
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										友链
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										关于
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>Cola</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/links">友链</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'
+    style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'>
+</div>
+<style>
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $(function () { $('.h-right-close>svg').click(function () { $('.sidebar').animate({ width: "66%" }, 500); $('.shelter').fadeIn("slow") }); $('.shelter').click(function (e) { $('.sidebar').animate({ width: "0" }, 500); $('.shelter').fadeOut("slow") }) })
+</script>
+		<script>
+			$(function () { $(window).scroll(function () { if ($(document).scrollTop() > 100) { $(".header-top").removeClass("header-move2"); $('.header-top').addClass('header-move1') } else { $(".header-top").removeClass("header-move1"); $('.header-top').addClass('header-move2') } }) });
+		</script>
+<div class="header-bg ">
+    <div class="bg-content">
+        <ul class="tag">
+            
+            
+            <li><a href="/tags/Vue">Vue</a></li>
+            
+            
+        </ul>
+        <h1>Vue3的Composition简介</h1>
+        <div class="article-info">
+            <div class="article-author">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <g>
+                        <path fill="#12183A"
+                            d="M6.187 15.265A6.47 6.47 0 0 0 10 16.5a6.47 6.47 0 0 0 3.813-1.235A4.99 4.99 0 0 0 10 13.5a4.99 4.99 0 0 0-3.813 1.765zM5.082 14.25A6.485 6.485 0 0 1 10 12c1.965 0 3.726.872 4.918 2.25a6.5 6.5 0 1 0-9.836 0zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z">
+                        </path>
+                    </g>
+                </svg>
+                
+                <span> <a href="">Cola</a></span>
+                <p>2021-07-31 17:54:37</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="article-content">
+    <div id="article" class="content">
+        <blockquote>
+<p>这是一份个人学习Vue3的笔记整理，不会去记录某些Api的原理，只记录这些API的一些基本用法，有写错的地方，希望包涵指正。</p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>要体验Vue3的话，需要安装最新版的VueCLi（当然使用Vite也行），安装之后，通过<code>vue create demo</code>即可选择创建Vue3的项目。</p>
+<h3 id="组合式API"><a href="#组合式API" class="headerlink" title="组合式API"></a>组合式API</h3><p>CompositionAPI（组合式API）是Vue3新的写法，从官方文档可以看到它的特点：<strong>能够将同一个逻辑关注点相关的代码配置在一起，使得应用程序在可维护性和灵活性方面走得更远。</strong>  </p>
+<p>使用：</p>
+<p>组合式API必须使用在<code>setup</code>函数里面，即<code>setup</code>函数是组合式API的入口函数。</p>
+<h3 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h3><p>setup函数的第一个特点就是：由于<code>setup</code>在组件实例前先执行，所以除了<code>props</code>以外无法访问<code>this</code>，<code>computed</code>,<code>methods</code>等等，但作为代替我们可以以其他的书写方式来实现：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">setup (props) &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span> (<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Hellol&#x27;</span>)<br>    &#125;<br>    watch(<span class="hljs-function">() =&gt;</span> props.msg, <span class="hljs-function">(<span class="hljs-params">newVal, oldVal</span>) =&gt;</span> &#123;<br>        <span class="hljs-built_in">console</span>.log(newVal, oldVal)<br>    &#125;)<br>    <span class="hljs-keyword">const</span> rMsg = computed(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> props.msg.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join(<span class="hljs-string">&#x27;&#x27;</span>)<br>    &#125;)<br><br>    <span class="hljs-keyword">return</span> &#123;<br>        greet,<br>        rMsg<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到，在<code>setup</code>里面通过组合式API添加了greet方法，监听了<code>props</code>的<code>msg</code>属性，以及添加了一个计算属性rMsg，这些新加的属性或方法必须返回之后才能在<code>template</code>正常使用。</p>
+<p>在<code>setup</code>里面使用<code>props</code>的时候，依然需要定义<code>props</code>对象，来规定传递过来的属性名称和默认值。</p>
+<h3 id="reactive"><a href="#reactive" class="headerlink" title="reactive"></a>reactive</h3><p><code>reactive</code>是组合式API里面的响应式API，通过<code>reactive</code>可以返回一个具有响应式的副本对象（所有嵌套的对象都会被代理）：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = reactive(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span><br>&#125;)<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reverseMsg</span> (<span class="hljs-params"></span>) </span>&#123;<br>    state.msg = state.msg.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join(<span class="hljs-string">&#x27;&#x27;</span>)<br>&#125;<br><span class="hljs-keyword">return</span> &#123;<br>    state,<br>    reverseMsg<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>此时，如果执行<code>reverseMsg</code>方法的话，模板里含有的<code>state.msg</code>的UI也会跟着刷新，但是通过<code>reactive</code>定义的对象副本有两个特点：</p>
+<ol>
+<li>必须是一个对象，否则UI不会更新，例如：num = reactive(0)，这种是不会更新UI的；</li>
+<li>里面定义的其他对象要修改时，必须重新赋值，否则也不会刷新UI界面，例如Date对象，不能通过setDate这样的API来刷新UI界面。</li>
+</ol>
+<h3 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a>readonly</h3><p><code>readonly</code>类似于<code>reactive</code>，只是它定义的副本是只读的，类似<code>const</code>定义变量那种，他的所有嵌套也是只读的。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = readonly(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span><br>&#125;)<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reverseMsg</span> (<span class="hljs-params"></span>) </span>&#123;<br>    state.msg = state.msg.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join(<span class="hljs-string">&#x27;&#x27;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码会有警告：<code>Set operation on key &quot;msg&quot; failed: target is readonly. &#123;msg: &quot;Hello.&quot;&#125;</code>，并且所做的修改时无效的。</p>
+<h3 id="shallowRecative"><a href="#shallowRecative" class="headerlink" title="shallowRecative"></a>shallowRecative</h3><p>和<code>reactive</code>一样是创建一个响应式对象副本的，区别就是它只是第一层做了代理，里面的对象不做递归代理。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = reactive(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span>,<br>    <span class="hljs-attr">info</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;vue3&#x27;</span><br>    &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(state, state.info)<br></code></pre></td></tr></table></figure>
+
+<p>这是由<code>reactive</code>定义的对象副本，打印出来的是<code>Proxy &#123;msg: &quot;Hello.&quot;, info: &#123;…&#125;&#125; Proxy &#123;title: &quot;vue3&quot;&#125;</code>，可以看到<code>info</code>也是被<code>Proxy</code>代理了的，再看看<code>shallowReactive</code>创建的对象副本：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = shallowReactive(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span>,<br>    <span class="hljs-attr">info</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;vue3&#x27;</span><br>    &#125;<br>&#125;)<br><span class="hljs-built_in">console</span>.log(state, state.info)<br></code></pre></td></tr></table></figure>
+
+<p>打印出来的是：<code>Proxy &#123;msg: &quot;Hello.&quot;, info: &#123;…&#125;&#125; &#123;title: &quot;vue3&quot;&#125;</code>。</p>
+<p><strong>他们两个的区别就是，因为<code>reactive</code>是递归来代理了所有对象的，所以不管修改外面的对象还是里面的对象，也会让UI刷新；而<code>shallowReactive</code>只有修改最外层对象时，才会做UI刷新。</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = shallowReactive(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span>,<br>    <span class="hljs-attr">info</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;vue3&#x27;</span><br>    &#125;<br>&#125;)<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reverseMsg</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-comment">// 因为是shallowReactive定义的，所以不能直接通过修改info面的title来刷新UI，必须得重新引用一个对象副本</span><br>    state.info = &#123; <span class="hljs-attr">title</span>: state.info.title.split(<span class="hljs-string">&#x27;&#x27;</span>).reverse().join(<span class="hljs-string">&#x27;&#x27;</span>) &#125;<br>    <span class="hljs-comment">// reactive定义的对象副本，则可以通过这样修改值来刷新UI</span><br>    <span class="hljs-comment">// state.info.title = state.info.title.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="shallowReadonly"><a href="#shallowReadonly" class="headerlink" title="shallowReadonly"></a>shallowReadonly</h3><p>标记自身的对象为可读，内部的对象则可以做修改，这是官方例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = shallowReadonly(&#123;<br>  <span class="hljs-attr">foo</span>: <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">nested</span>: &#123;<br>    <span class="hljs-attr">bar</span>: <span class="hljs-number">2</span><br>  &#125;<br>&#125;)<br><br><span class="hljs-comment">// 改变状态本身的property将失败</span><br>state.foo++<br><span class="hljs-comment">// ...但适用于嵌套对象</span><br>isReadonly(state.nested) <span class="hljs-comment">// false</span><br>state.nested.bar++ <span class="hljs-comment">// 适用</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p><code>ref</code>和<code>reactive</code>类似，但是它可以接收基本变量，并且使用的时候需要加上<code>.value</code>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = ref(<span class="hljs-string">&#x27;lihua&#x27;</span>)<br><span class="hljs-built_in">console</span>.log(name.value)	<span class="hljs-comment">// lihua</span><br></code></pre></td></tr></table></figure>
+
+<p><code>ref</code>定义的属性还有一个特点，就是在<code>template</code>里面使用的话，不需要加上<code>.value</code>，模板会自动解析出对应的<code>value</code>值。</p>
+<h3 id="toRef"><a href="#toRef" class="headerlink" title="toRef"></a>toRef</h3><p>可以将源对象的某个属性创建一个对应的响应式副本<code>ref</code>并返回回去：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> msg = toRef(state, <span class="hljs-string">&#x27;msg&#x27;</span>)<br>msg.value = <span class="hljs-string">&#x27;.olleH&#x27;</span><br><span class="hljs-built_in">console</span>.log(state.msg)	<span class="hljs-comment">// .olleH</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看到，创建的副本修改的值会影响到原来的<code>reactive</code>创建的对象，并且也会刷新UI。</p>
+<h3 id="toRefs"><a href="#toRefs" class="headerlink" title="toRefs"></a>toRefs</h3><p>可以将源对象创建为一个普通对象，并且里面的属性都通过了<code>ref</code>的包装，来指向原对象。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> state = reactive(&#123;<br>    <span class="hljs-attr">msg</span>: <span class="hljs-string">&#x27;Hello.&#x27;</span>,<br>    <span class="hljs-attr">info</span>: &#123;<br>        <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;vue3&#x27;</span><br>    &#125;<br>&#125;)<br><br><span class="hljs-keyword">const</span> state = toRefs(state)<br><span class="hljs-built_in">console</span>.log(state)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到打印出：<code>&#123;msg: ObjectRefImpl, info: ObjectRefImpl&#125;</code>。这个API可以在解构等方面的时候起到非常有用的地方：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 这种用法，在template的话需要通过state.msg来使用</span><br><span class="hljs-keyword">return</span> &#123;<br>    state<br>&#125;<br><span class="hljs-comment">// 这样使用扩展运算符的话，基本属性的修改会无效</span><br><span class="hljs-keyword">return</span> &#123;<br>    ...state<br>&#125;<br><span class="hljs-comment">// 通过toRefs来使用的话，因为基本属性也通过ref来包装了一层，所以可以直接使用msg</span><br><span class="hljs-keyword">return</span> &#123;<br>    ...toRefs(state)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在传递<code>props</code>的时候也非常有用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 某个子组件，接收了父组件传过来的title</span><br><span class="hljs-keyword">const</span> myTitle = props.title<br>watch(<span class="hljs-function">() =&gt;</span> props.title, <span class="hljs-function"><span class="hljs-params">newVal</span> =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(newVal)<br>&#125;)<br><span class="hljs-keyword">return</span> &#123;<br>    myTitle<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上述代码，父组件修改<code>title</code>时，子组件是会监听到<code>title</code>的变化的，但是<code>myTitle</code>不会改变，UI并不会刷新（可是我看文档上说的是，通过<code>.</code>的方式也是响应式的额，奇怪了！）。</p>
+<p>改成使用<code>toRefs</code>的方式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> &#123; <span class="hljs-attr">title</span>: myTitle &#125; = toRefs(props)<br>watch(<span class="hljs-function">() =&gt;</span> props.title, <span class="hljs-function"><span class="hljs-params">newVal</span> =&gt;</span> &#123;<br>    <span class="hljs-built_in">console</span>.log(myTitle.value, newVal)<br>&#125;)<br><span class="hljs-keyword">return</span> &#123;<br>    myTitle<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样的话，当修改父组件的<code>title</code>时，子组件也会跟着刷新UI，但是使用的时候要记得加<code>.value</code>，模板上不加。</p>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>在Vue3里面使用路由的话，需要安装最新版本的（4.x)：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">yarn add vue-router@next<br>npm isntall --save vue-router@next<br></code></pre></td></tr></table></figure>
+
+<p>官方例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createRouter, createWebHashHistory &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-router&#x27;</span><br><span class="hljs-keyword">import</span> Home <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../views/Home.vue&#x27;</span><br><br><span class="hljs-keyword">const</span> routes = [<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/&#x27;</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Home&#x27;</span>,<br>    <span class="hljs-attr">component</span>: Home<br>  &#125;,<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/about&#x27;</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;About&#x27;</span>,<br>    <span class="hljs-comment">// route level code-splitting</span><br>    <span class="hljs-comment">// this generates a separate chunk (about.[hash].js) for this route</span><br>    <span class="hljs-comment">// which is lazy-loaded when the route is visited.</span><br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-comment">/* webpackChunkName: &quot;about&quot; */</span> <span class="hljs-string">&#x27;../views/About.vue&#x27;</span>)<br>  &#125;<br>]<br><br><span class="hljs-keyword">const</span> router = createRouter(&#123;<br>  <span class="hljs-attr">history</span>: createWebHashHistory(),<br>  routes<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>除了通过<code>new</code>改成了函数创建路由的方式，其他的配置还是没什么变化，如果要在<code>setup</code>里面使用路由对象的话，需要单独引入：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; useRouter, useRoute &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-router&#x27;</span><br>setup () &#123;<br>    <span class="hljs-keyword">const</span> router = useRouter()<br>    <span class="hljs-keyword">const</span> route = useRoute()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// main.js</span><br><span class="hljs-keyword">import</span> router <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/src/router/index&#x27;</span><br>...<br>app.use(router)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>其他用法可以参考官方的文档：<a target="_blank" rel="noopener" href="https://next.router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%8F%AF%E7%94%A8%E7%9A%84%E9%85%8D%E7%BD%AE-api">导航守卫</a>和<a target="_blank" rel="noopener" href="https://next.router.vuejs.org/zh/guide/advanced/composition-api.html">Vue Router 和 组合式 API</a>。</p>
+<h3 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h3><p>和路由一样，Vuex需要安装最新版本的：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">yarn add vuex@next<br>npm install --save vuex@next<br></code></pre></td></tr></table></figure>
+
+<p>官方例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vuex&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createStore(&#123;<br>  <span class="hljs-attr">state</span>: &#123;<br>  &#125;,<br>  <span class="hljs-attr">mutations</span>: &#123;<br>  &#125;,<br>  <span class="hljs-attr">actions</span>: &#123;<br>  &#125;,<br>  <span class="hljs-attr">modules</span>: &#123;<br>  &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// main.js</span><br><span class="hljs-keyword">import</span> store <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/src/store/index&#x27;</span><br>...<br>app.use(store)<br></code></pre></td></tr></table></figure>
+
+<p>在<code>setup</code>里面使用的话，也需要单独引入（我没找到其他方法o(╥﹏╥)o）。</p>
+<p><strong>Over,暂时就记录到这儿吧，有问题还请指正，Tanks.</strong></p>
+
+    </div>
+</div>
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 109;
+        width: 600px !important;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            width: 88%
+        }
+    }
+</style>
+<script>
+    $(function () { $('#article').click(function (e) { if (e.target.tagName == "IMG") { if ($('#nonediv').length == 0) { let MImg = `<div id='noneimg'><img src='${e.target.currentSrc}'></div>`; let MDiv = "<div id='nonediv' style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'></div>"; $('#article').append(MDiv); $('#article').append(MImg); $("#nonediv").fadeIn("slow"); $("#noneimg img").fadeIn("slow") } } else { if ($('#nonediv').length !== 0) { $("#noneimg ").fadeOut("slow"); $("#nonediv").fadeOut("slow"); setTimeout(function () { $('#nonediv').remove(); $('#noneimg').remove() }, 500) } } }); $('.article-content').addClass('content-move') });
+</script>
+<div class="Last-Next">
+    
+    <a href="/2021/07/31/vue-svg-icon/">
+        <div class="last">
+            <span>上一篇</span>
+            <p>基于Vue实现自定义的图标组件</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2021/07/31/uniapp-sqlite/">
+        <div class="next">
+            <span>下一篇</span>
+            <p>关于uni-app使用sqlite来做App的本地缓存</p>
+        </div>
+    </a>
+    
+</div>
+		
+<link rel="stylesheet" href="/css/food.css">
+
+<div class="footer">
+	<div class="Copyright">
+		©2021 By Cola. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Aizener">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: block;
+            border-radius: 50%;
+            width: 66px;
+            height: 66px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            transition: border .5s;
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 30px;
+            height: 30px;
+            margin-top: 17.5px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $('#js-go_top').gotoTop({ offset: 500, speed: 300, animationShow: { 'transform': 'translate(0,0)', 'transition': 'transform .5s ease-in-out' }, animationHide: { 'transform': 'translate(100px,0)', 'transition': 'transform .5s ease-in-out' } });
+</script>
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+
+</html>
