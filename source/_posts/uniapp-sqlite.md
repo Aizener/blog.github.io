@@ -1,5 +1,6 @@
 ---
 title: 关于uni-app使用sqlite来做App的本地缓存
+date: 2021-07-31 16:11:25
 tags:
   - uni-app
   - sqlite

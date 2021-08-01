@@ -1,5 +1,6 @@
 ---
 title: 关于通过addEventListener添加事件监听的一些踩坑笔记
+date: 2021-07-31 16:11:15
 tags:
   - JavaScript
 categories:

@@ -1,5 +1,6 @@
 ---
 title: 关于JS的原型与继承相关概念
+date: 2021-07-31 16:13:15
 tags:
   - JavaScript
 categories:
