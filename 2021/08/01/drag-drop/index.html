@@ -3,14 +3,14 @@
 
 	<head>
 		
-<title>来弄一个Github的个人介绍页吧~-Cola</title>
+<title>关于H5新特性拖放API讲解-Cola</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
 
 
-<meta name="keywords" content="Github,">
+<meta name="keywords" content="JavaScript,HTML5,">
 <meta name="description" content="">
 
 
@@ -258,11 +258,13 @@
         <ul class="tag">
             
             
-            <li><a href="/tags/Github">Github</a></li>
+            <li><a href="/tags/JavaScript">JavaScript</a></li>
+            
+            <li><a href="/tags/HTML5">HTML5</a></li>
             
             
         </ul>
-        <h1>来弄一个Github的个人介绍页吧~</h1>
+        <h1>关于H5新特性拖放API讲解</h1>
         <div class="article-info">
             <div class="article-author">
                 
@@ -275,7 +277,7 @@
                 </svg>
                 
                 <span> <a href="">Cola</a></span>
-                <p>2021-07-31 16:12:15</p>
+                <p>2021-08-01 21:58:15</p>
             </div>
         </div>
     </div>
@@ -283,23 +285,85 @@
 <div class="article-content">
     <div id="article" class="content">
         <blockquote>
-<p>现在GitHub可以添加个人介绍页了，这里小小的分享一下吧~<br>先来看看效果是啥样：</p>
+<p>HTML5出来了许多的新特性，拖放就是其中比较有用的特性之一，可以应用到许多业务场景中去，通过这个新特性，我们也可以实现许多有趣的例子。</p>
 </blockquote>
-<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0edd62cedc6b43b48ef8cc85ad2e59d5~tplv-k3u1fbpfcp-watermark.image"></p>
-<p><strong>是不是感觉效果还不错？实现起来还是非常简单的，开搞！</strong></p>
-<h3 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h3><p>首先，需要新建一个和自己名字一样的仓库，名字一样的话会有一个小提示哦 o(<em>￣︶￣</em>)o<br><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bcd5e779ccde476a922897f09cc90fc2~tplv-k3u1fbpfcp-watermark.image"></p>
-<h3 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h3><p>建好仓库后，就把仓库Clone下来，然后新建一个<code>README.md</code>文件，在里面写自我介绍；<br>其实，Github就是把你同名的仓库的<code>README.md</code>文件表现现实在首页而已，很好理解的。</p>
-<p>自我介绍咋个写我就不多说了，这里说两个东西：  </p>
+<p>先看一个通过拖放实现的小Demo：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/225149073fd14048aa2914014049e538~tplv-k3u1fbpfcp-watermark.image" alt="nicef.gif"></p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>拖放是H5的新特性，即抓取对象以后拖到另一个位置，但是前提是这个元素设置了属性<code>draggable=true</code>，才能让该元素具有拖放功能。</p>
+<p>拖放具有三个过程，即：<br><code>开始拖动</code> -&gt; <code>拖动中</code> -&gt; <code>放置元素</code>  </p>
 <ul>
-<li>Github Stats Card：就是我截图里面的一个统计卡片；</li>
-<li>Emoji： 就是一些可以放在<code>Markdown</code>文件的表情。<h4 id="Github-Stats-Card"><a href="#Github-Stats-Card" class="headerlink" title="Github Stats Card"></a>Github Stats Card</h4>这个非常简单，贴上<a target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats">Github仓库</a>，使用非常的简单，只需要引入下面代码：<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">[![Anurag<span class="hljs-string">&#x27;s github stats](//p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1188110e11c84be89e6c60130622635a~tplv-k3u1fbpfcp-zoom-1.image)](https://github.com/anuraghazra/github-readme-stats)</span><br></code></pre></td></tr></table></figure>
-下面就是代码实现的一个Demo：  </li>
+<li>开始拖动：指触发拖动的元素的过程，比如轻按元素时；</li>
+<li>拖动中：移动拖动中的元素；</li>
+<li>放置元素：把拖动的元素，放置到另一个元素里面的过程。</li>
 </ul>
-<p><img src="https://github-readme-stats.vercel.app/api?username=anuraghazra&count_private=true" alt="Anurag&#39;s github stats"></p>
-<p>只需要吧<code>username</code>改成自己的Github用户名即可，如果不喜欢这个默认的主题，还可以自由配置主题。</p>
-<h4 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h4><p>这个玩意儿也非常的实用，可以让你很轻松的嵌入表情，进入<a target="_blank" rel="noopener" href="https://www.webfx.com/tools/emoji-cheat-sheet/">Emoji官网</a>选择喜欢的表情代码，复制粘贴即可。  </p>
-<p>例如：微笑 -&gt; :smile:  (滑稽，掘金的<code>Markdown</code>编辑器好像解析不出来，我用Typora是可以的)</p>
-<p><strong>以上就是如何弄一个Github的个人介绍页，喜欢的点点赞吧，Thanks♪(･ω･)ﾉ。</strong></p>
+<p>在不同的阶段，都有其相对应的<code>API</code>，下面我们就看看这些<code>API</code>。</p>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>H5的拖放有如下6个<code>API</code>供使用：  </p>
+<ul>
+<li><code>ondragstart</code></li>
+<li><code>ondrag</code></li>
+<li><code>ondragend</code></li>
+<li><code>ondragenter</code></li>
+<li><code>ondragover</code></li>
+<li><code>ondrop</code><br>上面可以看到我写这些<code>API</code>分两种情况，前三个是<strong>拖动的元素对应的API</strong>，后三个是<strong>放置的元素的API</strong>。  </li>
+</ul>
+<p>例如：我要把<code>div#box1</code>拖动到<code>div#box2</code>，那么<code>div#box1</code>就该监听<code>dragstart</code>和<code>dragend</code>，而<code>div#box2</code>就监听另外三个。  </p>
+<table>
+<thead>
+<tr>
+<th align="center">对象</th>
+<th align="center">事件</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">拖动的元素</td>
+<td align="center">dragstart</td>
+<td align="center">触发拖动时就会执行</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">drag</td>
+<td align="center">触发拖动后拖动元素过程触发</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">dragend</td>
+<td align="center">拖动结束后触发</td>
+</tr>
+<tr>
+<td align="center">放置的元素</td>
+<td align="center">dragenter</td>
+<td align="center">当拖动的元素进入绑定的元素区域里就会触发</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">dragover</td>
+<td align="center">当拖动的元素在放置的元素区域里移动就会触发</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">drop</td>
+<td align="center">当拖动的元素在放置的元素区域里释放就会触发</td>
+</tr>
+</tbody></table>
+<p><strong>注意：<code>drop</code>事件在一些浏览器上可能不会触发，这时需要在<code>dragover</code>和<code>drop</code>事件里面阻止浏览器默认事件：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">addEventListener(<span class="hljs-string">&#x27;dragover&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    e.preventDfault()<br>&#125;)<br>addEventListener(<span class="hljs-string">&#x27;drop&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    e.preventDfault()<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p><strong>另外，拖动移入移出的判定是通过鼠标的位置，而不是拖动的元素的位置。</strong></p>
+<h3 id="事件顺序："><a href="#事件顺序：" class="headerlink" title="事件顺序："></a>事件顺序：</h3><ul>
+<li>拖动时（未进入放置元素区域）：<br><code>ondragstart</code> -&gt; <code>ondrag</code> -&gt; <code>ondragend</code></li>
+<li>拖动时（进入放置元素区域）：<br><code>ondragstart</code> -&gt; <code>ondragenter</code> -&gt; <code>ondragover</code> -&gt; <code>ondrag</code> -&gt; <code>ondrop</code> -&gt; <code>ondragend</code></li>
+</ul>
+<h2 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h2><p>元素拖放的过程，往往是需要数据传递的，比如放置时要获取拖动元素的状态，其中就可以通过<code>dataTransfer</code>这个对象来传递数据。</p>
+<p>通过在<code>dragstart</code>开始阶段设置状态，然后再<code>drop</code>时获取状态，再进行其他操作。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">addEventListener(<span class="hljs-string">&#x27;dragstart&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    e.dataTransfer.setData(<span class="hljs-string">&#x27;msg&#x27;</span>, <span class="hljs-string">&#x27;hello&#x27;</span>)<br>    <span class="hljs-comment">// 传递对象</span><br>    <span class="hljs-comment">// e.dataTransfer.setData(&#x27;greet&#x27;, JSON.stringify(&#123; msg1: &#x27;hello&#x27;, msg2: &#x27;good morning&#x27; &#125;))</span><br>&#125;)<br>addEventListener(<span class="hljs-string">&#x27;drop&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> msg = e.dataTransfer.getData(<span class="hljs-string">&#x27;msg&#x27;</span>)<br>    <span class="hljs-comment">// TODO</span><br>    e.preventDfault()<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>注意，这里的<code>setData</code>只能设置字符串，如果是对象的话，请通过<code>JSON.stringify</code>来序列化。</p>
+<h2 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h2><p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e303034363424ab680e1c57353c69077~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>兼容性还是存在一些问题，具体可以看看<a target="_blank" rel="noopener" href="https://www.caniuse.com/?search=drag">caniuse</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果觉得写原生拖动麻烦，这里还推荐再次封装过的<a target="_blank" rel="noopener" href="https://github.com/SortableJS/Sortable">sortable.js</a>库，功能强大，使用也不难；  </p>
+<p>拖动这个特性的应用还是比较广泛的，但因为是<code>H5</code>新特性，兼容在一些浏览器上还是存在一定问题，所以依据项目情况使用。  </p>
+<p>这里也介绍的全是基础用法，详细的可以去看看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API">MDN文档</a>。</p>
 
     </div>
 </div>
@@ -329,19 +393,12 @@
 </script>
 <div class="Last-Next">
     
-    <a href="/2021/07/31/prototype/">
-        <div class="last">
-            <span>上一篇</span>
-            <p>关于JS的原型与继承相关概念</p>
-        </div>
-    </a>
-    
 
     
-    <a href="/2021/07/31/vue3-composition-base/">
+    <a href="/2021/07/31/atomic-css/">
         <div class="next">
             <span>下一篇</span>
-            <p>Vue3的Composition简介</p>
+            <p>使用CSS原子类来简化样式代码</p>
         </div>
     </a>
     

@@ -3,7 +3,7 @@
 
 	<head>
 		
-<title>个人博客-Cola</title>
+<title>标签:HTML5-Cola</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,8 +33,7 @@
 
 	<body>
 		
-
-<link rel="stylesheet" href="/css/archive.css">
+<link rel="stylesheet" href="/css/tag.css">
 
 
 <link rel="stylesheet" href="/css/header.css">
@@ -59,13 +58,13 @@
 								
 									
 						
-							<li class="select">
-								<a href="/archives">
-									归档
-								</a>
-								<span class="dot"></span>
-							</li>
-							
+								<li>
+									<a href="/archives">
+										归档
+									</a>
+									<span class="dot"></span>
+								</li>
+								
 									
 						
 								<li>
@@ -77,13 +76,13 @@
 								
 									
 						
-								<li>
-									<a href="/tags">
-										标签
-									</a>
-									<span class="dot"></span>
-								</li>
-								
+							<li class="select">
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
 									
 						
 								<li>
@@ -251,94 +250,28 @@
 <div class="header-bg">
     <div class="bg-content">
         <span>
-            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imgicon-remixicon.svg" alt="Q">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imgtags.svg" alt="Q">
         </span>
-
-        <h2>居然用了 1 年一共才写了 13 篇文章!</h2>
+        <h2> HTML5 </h2>
     </div>
 </div>
 <div class="article-content">
     <div id="article" class="content">
-        
-        <p>
-            2021
-        </p>
-        
-        <a href="/2021/08/01/drag-drop/">
-            <span>关于H5新特性拖放API讲解</span>
-            <time>08-01</time>
-        </a>
-        
-        <a href="/2021/07/31/atomic-css/">
-            <span>使用CSS原子类来简化样式代码</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/guid/">
-            <span>基于Vue实现页面的引导操作</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/vue-theme/">
-            <span>基于Vue对主题修改的思考与实现</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/vue-svg-icon/">
-            <span>基于Vue实现自定义的图标组件</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/rem-vw/">
-            <span>关于移动端适配的实现</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/prototype/">
-            <span>关于JS的原型与继承相关概念</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/vue3-composition-base/">
-            <span>Vue3的Composition简介</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/github-page/">
-            <span>来弄一个Github的个人介绍页吧~</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/uniapp-sqlite/">
-            <span>关于uni-app使用sqlite来做App的本地缓存</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/addeventlistener/">
-            <span>关于通过addEventListener添加事件监听的一些踩坑笔记</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/begin/">
-            <span>重新开始</span>
-            <time>07-31</time>
-        </a>
-        
-        <a href="/2021/07/31/hello-world/">
-            <span>Hello World</span>
-            <time>07-31</time>
-        </a>
-        
-        
+        <div class="list-group">
+            
+            
+            
+            <p class="h5">2021</p>
+            
+            <a href="/2021/08/01/drag-drop/" class="list-group-item list-group-item-action">
+                <span class="archive-post-title">关于H5新特性拖放API讲解</span>
+                <time style="float: right;">08-01</time>
+            </a>
+            
+        </div>
     </div>
 </div>
-
-
-
-
-<script>
-    $(function () { $('.article-content').addClass('content-move'); })
-</script>
+<script>$(function () { $('.article-content').addClass('content-move') });</script>
 		
 <link rel="stylesheet" href="/css/food.css">
 
