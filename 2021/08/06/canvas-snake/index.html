@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		
+<title>学习canvas并完成一个贪吃蛇-Cola</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+
+<meta name="keywords" content="JavaScript,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+
+<!-- Baidu Analytics -->
+<script defer>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?dce4fe21e2a1c502b8ec573d93a650ed";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+	<meta name="generator" content="Hexo 5.4.0"></head>
+
+	<body>
+		
+<link rel="stylesheet" href="/css/page.css">
+
+
+<link rel="stylesheet" href="/css/page_cente.css">
+
+
+<link rel="stylesheet" href="/css/atom-one-dark.css">
+
+
+<link rel="stylesheet" href="/css/header.css">
+
+	<div class="header">
+		<div class="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										主页
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										归档
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										分类
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										标签
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										友链
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										关于
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>Cola</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/links">友链</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'
+    style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'>
+</div>
+<style>
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $(function () { $('.h-right-close>svg').click(function () { $('.sidebar').animate({ width: "66%" }, 500); $('.shelter').fadeIn("slow") }); $('.shelter').click(function (e) { $('.sidebar').animate({ width: "0" }, 500); $('.shelter').fadeOut("slow") }) })
+</script>
+		<script>
+			$(function () { $(window).scroll(function () { if ($(document).scrollTop() > 100) { $(".header-top").removeClass("header-move2"); $('.header-top').addClass('header-move1') } else { $(".header-top").removeClass("header-move1"); $('.header-top').addClass('header-move2') } }) });
+		</script>
+<div class="header-bg ">
+    <div class="bg-content">
+        <ul class="tag">
+            
+            
+            <li><a href="/tags/JavaScript">JavaScript</a></li>
+            
+            
+        </ul>
+        <h1>学习canvas并完成一个贪吃蛇</h1>
+        <div class="article-info">
+            <div class="article-author">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                    <g>
+                        <path fill="#12183A"
+                            d="M6.187 15.265A6.47 6.47 0 0 0 10 16.5a6.47 6.47 0 0 0 3.813-1.235A4.99 4.99 0 0 0 10 13.5a4.99 4.99 0 0 0-3.813 1.765zM5.082 14.25A6.485 6.485 0 0 1 10 12c1.965 0 3.726.872 4.918 2.25a6.5 6.5 0 1 0-9.836 0zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-1.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z">
+                        </path>
+                    </g>
+                </svg>
+                
+                <span> <a href="">Cola</a></span>
+                <p>2021-08-06 21:35:33</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="article-content">
+    <div id="article" class="content">
+        <blockquote>
+<p>随着H5的到来，很多新特性都让人眼前一新。其中，canvas就是一个非常有用的特性，基于canvas我们可以完成图表、游戏等工具的实现。学前端这么久，都没好好看过canvas，这里打算正式学一下，这是第一站：看基础知识，并完成一个贪吃蛇。</p>
+</blockquote>
+<p>贪吃蛇算是比较一个简单的例子了，看了基础语法后，还是磕碜的写出来了，先看看示例：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2cb8a465491149aa85b060ebc7f43b8c~tplv-k3u1fbpfcp-watermark.image" alt="nicej.gif"></p>
+<p><a target="_blank" rel="noopener" href="https://yangxiang.cc/canvas_demos/">在线试玩</a></p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>通常使用<code>canvas</code>，我们需要在<code>html</code>里有至少一个<code>canvas</code>标签，以便来获取<code>canvas</code>对象，进而来创建出一个画布，然后就可以在画布上实现你的主意了。</p>
+<h3 id="创建画布"><a href="#创建画布" class="headerlink" title="创建画布"></a>创建画布</h3><p>通过<code>getContext</code>这个<code>API</code>，我们就可以获取一个<code>canvas</code>的上下文对象，也就是我们需要操作的画布了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> canvas = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;#canvas&#x27;</span>)  <span class="hljs-comment">// canvas id</span><br><span class="hljs-keyword">const</span> ctx = canvas.getContext(<span class="hljs-string">&#x27;2d&#x27;</span>) <span class="hljs-comment">// 获取一个2d的canvas上下文，就是一个2d画布</span><br></code></pre></td></tr></table></figure>
+<p>在获取上下文对象之前，我们还可以通过给<code>canvas</code>设置<code>width</code>和<code>height</code>来定义画布的宽和高，这里要注意一点：  </p>
+<p><strong>给canvas通过css设置的宽高和给canvas对象设置的宽高是不一样的；</strong><br><strong>有效的宽高应该是给canvas对象设置，通过css设置的可能会造成显示模糊。</strong></p>
+<blockquote>
+<p>Tip：可以看到我们获取的context对象是2d的，那么有没有3d呢？哈哈，是没有的。或许是因为WebGL出来的原因，canvas可能已经不会推出3d的模式了吧。</p>
+</blockquote>
+<h3 id="基础方法"><a href="#基础方法" class="headerlink" title="基础方法"></a>基础方法</h3><p>在获取画布对象后，我们需要在画布里面做操作的话，就需要了解基础的<code>API</code>了，这里我来介绍一下最基础的<code>API</code>使用：  </p>
+<ol>
+<li><code>beginPath</code>：开始或重置路径，这个<code>API</code>非常有用，当我们想画平行线时就得使用这个方法了，因为平行线我们没法一笔画完，所以得用<code>beginPath</code>来开始新路径。<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">ctx.beginPath()<br>ctx.lineTo(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br>ctx.lineTo(<span class="hljs-number">60</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">150</span>, <span class="hljs-number">100</span>)<br>ctx.stroke()<br></code></pre></td></tr></table></figure>
+看看以上没有使用<code>beginPath</code>绘制的结果：</li>
+</ol>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/43badc4e52bf4ed8a881b1b77e18dd49~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>可以看到，线条很奇怪的连接起来了，这是因为我们使用<code>lineTo</code>时没有开始新的绘制，看看正确的使用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">ctx.beginPath()<br>ctx.lineTo(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br>ctx.stroke()<br>ctx.beginPath()<br>ctx.lineTo(<span class="hljs-number">60</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">150</span>, <span class="hljs-number">100</span>)<br>ctx.stroke()<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/262860af8c4646d29e4031332b5e618d~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>上面两个Demo就很好的看出了<code>beginPath</code>的使用，这个方法很常用的。</p>
+<ol start="2">
+<li><code>closePath</code>：千万别把这个方法和<code>beginPath</code>搞混，其实他俩看起来像，实则没有关联，<code>closePath</code>是用来闭合路径的，看一个简单的例子就明白了。<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">ctx.beginPath()<br>ctx.lineTo(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">10</span>)<br>ctx.closePath()<br>ctx.stroke()<br></code></pre></td></tr></table></figure>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/18eae1bda18045c0b78ff111319d655e~tplv-k3u1fbpfcp-watermark.image" alt="image.png"><br><code>closePath</code>把上面两点闭合起来了，形成了一个直角三角形，没有<code>closePath</code>的话，上面就不会有一条边来封闭成图形了。</li>
+<li><code>moveTo</code>：把画笔放在某一个点，表示从这个点开始；</li>
+<li><code>lineTo</code>：把画笔移动到某一个点，其实和moveTo没有太大的区别。</li>
+<li><code>strokeStyle</code>：填充路径的样式，让线条呈现出不同的样式。<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">ctx.beginPath()<br>ctx.strokeStyle = <span class="hljs-string">&#x27;red&#x27;</span><br>ctx.lineTo(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br>ctx.stroke()<br>ctx.beginPath()<br>ctx.strokeStyle = <span class="hljs-string">&#x27;blue&#x27;</span><br>ctx.lineTo(<span class="hljs-number">60</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">150</span>, <span class="hljs-number">100</span>)<br>ctx.stroke()<br></code></pre></td></tr></table></figure>
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8b0cb48164174889a0436610f83c2ba9~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></li>
+</ol>
+<p>可以看到，平行线不再是单一的黑色了，而是变成了红蓝色平行线。这里要注意的是，<code>strokeStyle</code>会影响到后面的绘制，所以我们在绘制不同的路径时，看需求是否要重新设置<code>strokeStyle</code>。</p>
+<ol start="6">
+<li><p><code>stroke</code>：以画线的方式完成路径的绘制，不调佣这个方法的话，无论怎么<code>lineTo</code>还是不会画出线条的。</p>
+</li>
+<li><p><code>fillStyle</code>：填充区域的样式。</p>
+</li>
+<li><p><code>fill</code>：以填充的方式完成路径的绘制，<code>fill</code>可以按照画的线条路径，在里面填充出图形。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">ctx.beginPath()<br>ctx.strokeStyle = <span class="hljs-string">&#x27;red&#x27;</span><br>ctx.lineTo(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)<br>ctx.lineTo(<span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br>ctx.lineTo(<span class="hljs-number">200</span>, <span class="hljs-number">10</span>)<br>ctx.fillStyle = <span class="hljs-string">&#x27;red&#x27;</span><br>ctx.fill()<br></code></pre></td></tr></table></figure>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d44880c3a106468fbdb8fe138af02d9e~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+</li>
+<li><p><code>drawImage</code>：画一张图片在画布上，参数是：<code>Image</code>, <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>。<br><code>Image</code>是通过<code>new Image</code>获得的实例对象：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> img = <span class="hljs-keyword">new</span> Image()<br>img.src = <span class="hljs-string">&#x27;...&#x27;</span><br>ctx.drawImage(img, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>)<br></code></pre></td></tr></table></figure></li>
+<li><p><code>clearRect</code>：清楚画布的一个范围，参数是：<code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>。</p>
+</li>
+</ol>
+<p>以上仅仅10个非常简单的<code>API</code>，其实就足够我们完成许多的小<code>Demo</code>了，关键在于如何实现，接下来，我们就来想想怎么通过<code>canvas</code>画出一个贪吃蛇来。</p>
+<h4 id="绘制图形"><a href="#绘制图形" class="headerlink" title="绘制图形"></a>绘制图形</h4><p>通过以上的基础<code>API</code>，我们就可以画出很多的图形了，并且可以封装一些常用图形库了。不过，<code>canvas</code>其实已经把常用的一些图形，给我们封装为方法了，所以可以直接使用了，例如<code>fillRect</code>就可以直接绘制出一个方形图形了。</p>
+<p>贪多嚼不烂，我这里就先用熟简单的<code>API</code>。遇到要用的再去看，感兴趣的话可以先看看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API">Canvas API</a>。</p>
+<p>还有更多的，暂时不做赘婿，这里仅仅是入门，我们通过这些简单的<code>API</code>就可以完成很多小功能了，例如实现一个简单的贪吃蛇游戏。</p>
+<h2 id="贪吃蛇思路"><a href="#贪吃蛇思路" class="headerlink" title="贪吃蛇思路"></a>贪吃蛇思路</h2><p>要实现一个贪吃蛇游戏的话，我们需要考虑这些：</p>
+<ul>
+<li>需要绘制的：<ul>
+<li>地图：其实就是一个简单的方形平面，蛇需要在上面范围移动；</li>
+<li>蛇：蛇是有一个一个方形组成的，通过吃果实可以增加长度；</li>
+<li>果实：果实是随机产生在地图上的，可以被蛇吃下。</li>
+</ul>
+</li>
+<li>需要检测的：<ul>
+<li>蛇：蛇在碰到果实时，会吃掉增加长度；碰到自己或者地图边界时会死亡；</li>
+<li>果实：被蛇碰到时会被吃掉。<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3>为了方便写代码，我们可以先画上地图，这样可以看到每个方格，更直观，后期完成可以再去掉方格：<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawBoard</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span> ; i &lt; boxNum ; i ++) &#123;<br>    ctx.beginPath()<br>    ctx.moveTo(<span class="hljs-number">0</span>, i * boxSize)<br>    ctx.lineTo(<span class="hljs-number">800</span>, i * boxSize)<br>    ctx.stroke()<br>    ctx.beginPath()<br>    ctx.moveTo(i * boxSize, <span class="hljs-number">0</span>)<br>    ctx.lineTo(i * boxSize, <span class="hljs-number">800</span>)<br>    ctx.stroke()<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/552d14fb53bd44f7846683bc63882680~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>这样，我们在写蛇的移动、和果实生成时，就比较方便了。</p>
+<h3 id="小蛇的状态"><a href="#小蛇的状态" class="headerlink" title="小蛇的状态"></a>小蛇的状态</h3><p>蛇应该是由一个个小方格组成，状态我们通过一个对象数组来保存，里面的每个对象来记录<code>x</code>和<code>y</code>的坐标位置。<br> <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> snake = [&#123; <span class="hljs-attr">x</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span>&#125;, &#123; <span class="hljs-attr">x</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span>&#125;, &#123; <span class="hljs-attr">x</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span> &#125;]<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawSnake</span> (<span class="hljs-params">snake</span>) </span>&#123;<br>  snake.forEach(<span class="hljs-function">(<span class="hljs-params">item, idx</span>) =&gt;</span> &#123;<br>    ctx.beginPath()<br>    <span class="hljs-keyword">const</span> x = (item.x - <span class="hljs-number">1</span>) * boxSize<br>    <span class="hljs-keyword">const</span> y = (item.y - <span class="hljs-number">1</span>) * boxSize<br>    <span class="hljs-keyword">const</span> w = boxSize<br>    <span class="hljs-keyword">const</span> h = boxSize<br>    <span class="hljs-keyword">if</span> (snake.length - <span class="hljs-number">1</span> === idx) &#123;<br>      ctx.fillStyle = <span class="hljs-string">&#x27;red&#x27;</span><br>      ctx.fillRect(x, y, w, h)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      ctx.fillStyle = <span class="hljs-string">&#x27;green&#x27;</span><br>      ctx.fillRect(x, y, w, h)<br>    &#125;<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/658cebb31f834e0dae036ab344121be6~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>这样，我们就可以在画布上画出蛇的一个轮廓了，接下来就是该考虑小蛇怎么来移动身体了。</p>
+<h3 id="蛇的移动"><a href="#蛇的移动" class="headerlink" title="蛇的移动"></a>蛇的移动</h3><p>怎样让小蛇移动呢？我们所绘画出来的小蛇是通过保存状态的<code>snake</code>来生成的，所以我们就得考虑一点，当蛇移动的时候，该怎样修改呢？</p>
+<p>假设，蛇的头部是数组最后一个对象，那么身子就是其他的对象，小蛇的移动除了头部是可变的（操作有上下左右），其他部分其实就是<strong>身子的第一格移动到头部，第二格移动到第一格</strong>，所以，我们就可以知道小蛇移动的规律了，通过规律生成新的小蛇对象。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSnake</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> _snake = []<br>  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span> ; i &lt; snake.length ; i ++) &#123;<br>    _snake.push(snake[i])<br>  &#125;<br>  <span class="hljs-keyword">const</span> head = snake[snake.length - <span class="hljs-number">1</span>]<br>  newHead = &#123; <span class="hljs-attr">x</span>: head.x + <span class="hljs-number">1</span>, <span class="hljs-attr">y</span>: head.y &#125; <span class="hljs-comment">// 假设小蛇往右移动的</span><br>  _snake.push(newHead)<br><br>  <span class="hljs-keyword">return</span> _snake<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>小蛇新的对象生成了，那么怎么来实现小蛇移动的动画效果呢？</p>
+<h3 id="实现动画效果"><a href="#实现动画效果" class="headerlink" title="实现动画效果"></a>实现动画效果</h3><p>小蛇的移动肯定离不开定时器，当然有其他更好的方法也行，我这里使用的是<code>setTimeout</code>。<br>思路就是每隔一段时间重绘一次，并且重绘后再次递归调用方法，通过在方法里不停的绘画每一帧的结果，就能实现动画效果了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> timer = <span class="hljs-literal">null</span><br>move ()<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span> (<span class="hljs-params"></span>) </span>&#123;<br>  timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    ctx.clearRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">600</span>, <span class="hljs-number">600</span>)<br>    drawBoard()<br>    snake = getSnake()<br>    drawSnake(snake)<br>    move()<br>  &#125;, <span class="hljs-number">100</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在每次调用<code>move</code>也就是移动小蛇的方法时，我们首先的清楚画布，所以要用到<code>clearRect</code>这个方法；<br>然后再调用画地图的方法和画小蛇的方法，把地图再次画出来，并且把小蛇最新的状态画出来；因为每隔<code>100ms</code>我们会重新递归调用再绘画一次，所以看起来就会有移动的效果了：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2973777bcb83453cb8cdbbc59f7b48cf~tplv-k3u1fbpfcp-watermark.image" alt="nicek.gif"></p>
+<h3 id="修改方向"><a href="#修改方向" class="headerlink" title="修改方向"></a>修改方向</h3><p>修改小蛇的方向很简单，无法就是通过监听键盘事件然后修改<code>x</code>和<code>y</code>的值，所以肯定得有一个保存当前方向的状态：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> type = <span class="hljs-string">&#x27;right&#x27;</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">listenerKeyboard</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">document</span>.addEventListener(<span class="hljs-string">&#x27;keyup&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> &#123;<br>        <span class="hljs-keyword">switch</span>(e.key) &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowLeft&#x27;</span>: <span class="hljs-built_in">this</span>.type !== <span class="hljs-string">&#x27;right&#x27;</span> &amp;&amp; <span class="hljs-built_in">this</span>.type = <span class="hljs-string">&#x27;left&#x27;</span>; <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowUp&#x27;</span>: <span class="hljs-built_in">this</span>.type !== <span class="hljs-string">&#x27;down&#x27;</span> &amp;&amp; <span class="hljs-built_in">this</span>.type = <span class="hljs-string">&#x27;up&#x27;</span>; <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowRight&#x27;</span>: <span class="hljs-built_in">this</span>.type !== <span class="hljs-string">&#x27;left&#x27;</span> &amp;&amp; <span class="hljs-built_in">this</span>.type = <span class="hljs-string">&#x27;right&#x27;</span>; <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;ArrowDown&#x27;</span>: <span class="hljs-built_in">this</span>.type !== <span class="hljs-string">&#x27;up&#x27;</span> &amp;&amp; <span class="hljs-built_in">this</span>.type = <span class="hljs-string">&#x27;down&#x27;</span>; <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过判断按键的<code>key</code>值，再修改类型。这里，我判断了当按键为右时不能按左，上时不能按下，反之亦然。当然，这里还是会有<code>Bug</code>的，就是组合按键的时候亦然会出问题。</p>
+<h3 id="判断死亡"><a href="#判断死亡" class="headerlink" title="判断死亡"></a>判断死亡</h3><p>判断死亡很简单，就是判断小蛇头部是否与大于或小于边界的临界值，亦或者小蛇头部的坐标和身体的坐标重合：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-title">check</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">const</span> head = <span class="hljs-built_in">this</span>.snake[<span class="hljs-built_in">this</span>.snake.length - <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> (<br>      head.x &gt; <span class="hljs-built_in">this</span>.boxNum ||<br>      head.x &lt; <span class="hljs-number">1</span> ||<br>      head.y &gt; <span class="hljs-built_in">this</span>.boxNum ||<br>      head.y &lt; <span class="hljs-number">1</span> ||<br>      <span class="hljs-built_in">this</span>.isEatSelf(head)<br>    ) &#123;<br>      <span class="hljs-built_in">clearTimeout</span>(<span class="hljs-built_in">this</span>.timer)<br>      <span class="hljs-built_in">this</span>.timer = <span class="hljs-literal">null</span><br>      alert(<span class="hljs-string">&#x27;Game Over.&#x27;</span>)<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>    &#125; &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当小蛇达到死亡的条件后，就要清楚定时器并返回一个<code>boolean</code>值来作为判断。</p>
+<h3 id="生成果实"><a href="#生成果实" class="headerlink" title="生成果实"></a>生成果实</h3><p>生成果实非常简单，就是两个随机数，有点问题的就是，当生成的果实与小蛇重叠时应该重新生成（或者就不允许生成出重叠的），我这里为了简单，就随便实现了：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-title">generate</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.box.x) &#123;<br>      <span class="hljs-keyword">const</span> x = (<span class="hljs-built_in">this</span>.box.x - <span class="hljs-number">1</span>) * <span class="hljs-built_in">this</span>.boxSize<br>      <span class="hljs-keyword">const</span> y = (<span class="hljs-built_in">this</span>.box.y - <span class="hljs-number">1</span>) * <span class="hljs-built_in">this</span>.boxSize<br>      <span class="hljs-built_in">this</span>.ctx.beginPath()<br>      <span class="hljs-built_in">this</span>.ctx.fillStyle = <span class="hljs-string">&#x27;green&#x27;</span><br>      <span class="hljs-built_in">this</span>.ctx.fillRect(x, y, <span class="hljs-built_in">this</span>.boxSize, <span class="hljs-built_in">this</span>.boxSize)<br>      <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">let</span> result = &#123; <span class="hljs-attr">x</span>: <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">19</span> + <span class="hljs-number">1</span>), <span class="hljs-attr">y</span>: <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">19</span>) + <span class="hljs-number">1</span>&#125;<br>    <span class="hljs-keyword">const</span> isRepeat = <span class="hljs-built_in">this</span>.snake.some(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item.x === result.x &amp;&amp; item.y === result.y)<br>    <span class="hljs-keyword">if</span> (isRepeat) &#123;<br>      result = <span class="hljs-built_in">this</span>.generate()<br>      <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-built_in">this</span>.ctx.fillStyle = <span class="hljs-string">&#x27;green&#x27;</span><br>    <span class="hljs-keyword">const</span> x = (result.x - <span class="hljs-number">1</span>) * <span class="hljs-built_in">this</span>.boxSize<br>    <span class="hljs-keyword">const</span> y = (result.y - <span class="hljs-number">1</span>) * <span class="hljs-built_in">this</span>.boxSize<br>    <span class="hljs-built_in">this</span>.ctx.fillRect(x, y, <span class="hljs-built_in">this</span>.boxSize, <span class="hljs-built_in">this</span>.boxSize)<br>    <span class="hljs-built_in">this</span>.box = &#123; <span class="hljs-attr">x</span>: result.x, <span class="hljs-attr">y</span>: result.y &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>生成果实后，我们得有一个对象来保存果实的状态，因为如果小蛇没吃到果实是应该一直重新绘制在当前状态的。</p>
+<h3 id="吃掉果实"><a href="#吃掉果实" class="headerlink" title="吃掉果实"></a>吃掉果实</h3><p>当小蛇头部与果实坐标相等时，小蛇就应该吃掉果实了，并且身体得加上一截，也就是数组得新增一个对象。这里，我们采用<code>unshift</code>的方法来添加元素，因为<code>snake</code>数组的最后一个元素是头部：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-title">handleEat</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">const</span> last = <span class="hljs-built_in">this</span>.snake[<span class="hljs-built_in">this</span>.snake.length - <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">if</span> (last.x === <span class="hljs-built_in">this</span>.box.x &amp;&amp; last.y === <span class="hljs-built_in">this</span>.box.y) &#123;<br>      <span class="hljs-built_in">this</span>.box = &#123;&#125;<br>      <span class="hljs-built_in">this</span>.eatNum ++<br>      <span class="hljs-built_in">this</span>.speed -= <span class="hljs-built_in">this</span>.eatNum<br>      <span class="hljs-built_in">this</span>.snake.unshift(<span class="hljs-built_in">this</span>.first)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里的<code>first</code>其实是在上面<code>getSnake</code>时应该保存的<code>snake</code>第一个元素。</p>
+<h3 id="加载图片，美化效果"><a href="#加载图片，美化效果" class="headerlink" title="加载图片，美化效果"></a>加载图片，美化效果</h3><p>通过以上步骤，就能基本实现一个简单的贪吃蛇了。但是，现在的贪吃蛇看起来像是像素游戏，所以我们可通过<code>drawImage</code>这个方法来替代<code>fillRect</code>来绘制小蛇。  </p>
+<p>但是，现在还有个问题，就是，通过图片绘制小蛇的话，一开始游戏加载的时候图片出不来怎么办？所以，我们就得事先加载玩图片后，再走后面的逻辑了：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">Promise</span>.all([<br>  <span class="hljs-built_in">this</span>.loadImg(<span class="hljs-string">&#x27;headImgLeft&#x27;</span>, <span class="hljs-string">&#x27;./head-left.png&#x27;</span>),<br>  <span class="hljs-built_in">this</span>.loadImg(<span class="hljs-string">&#x27;headImgUp&#x27;</span>, <span class="hljs-string">&#x27;./head-up.png&#x27;</span>),<br>  <span class="hljs-built_in">this</span>.loadImg(<span class="hljs-string">&#x27;headImgRight&#x27;</span>, <span class="hljs-string">&#x27;./head-right.png&#x27;</span>),<br>  <span class="hljs-built_in">this</span>.loadImg(<span class="hljs-string">&#x27;headImgDown&#x27;</span>, <span class="hljs-string">&#x27;./head-down.png&#x27;</span>),<br>  <span class="hljs-built_in">this</span>.loadImg(<span class="hljs-string">&#x27;bodyImg&#x27;</span>, <span class="hljs-string">&#x27;./body.webp&#x27;</span>),<br>]).then(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-built_in">this</span>.headImg = <span class="hljs-built_in">this</span>.headImgRight<br>  <span class="hljs-built_in">this</span>.box = &#123;&#125;<br>  <span class="hljs-built_in">this</span>.type = <span class="hljs-string">&#x27;right&#x27;</span><br>  <span class="hljs-built_in">this</span>.speed = <span class="hljs-number">120</span><br>  <span class="hljs-built_in">this</span>.eatNum = <span class="hljs-number">0</span><br>  <span class="hljs-built_in">this</span>.ctx = canvas.getContext(<span class="hljs-string">&#x27;2d&#x27;</span>)<br>  <span class="hljs-built_in">this</span>.snake = [&#123; <span class="hljs-attr">x</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span>&#125;, &#123; <span class="hljs-attr">x</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span>&#125;, &#123; <span class="hljs-attr">x</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">5</span> &#125;]<br>  <span class="hljs-built_in">this</span>.init()<br>&#125;)<br><br><span class="hljs-function"><span class="hljs-title">loadImg</span>(<span class="hljs-params">name, src</span>)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> &#123;<br>      <span class="hljs-built_in">this</span>[name] = <span class="hljs-keyword">new</span> Image()<br>      <span class="hljs-built_in">this</span>[name].src = src<br>      <span class="hljs-built_in">this</span>[name].onload = <span class="hljs-function">() =&gt;</span> resolve()<br>    &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>通过<code>Promise</code>亦或者是<code>async/await</code>我们就可以在资源加载完后再执行后面代码，资源过大的话可以适当增加 进度条做提示。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>基本上，最简单基本的贪吃蛇就完成了。</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2cb8a465491149aa85b060ebc7f43b8c~tplv-k3u1fbpfcp-watermark.image" alt="nicej.gif"></p>
+<p><a target="_blank" rel="noopener" href="https://yangxiang.cc/canvas_demos/">在线试玩</a></p>
+<p>当然，我们可以增加积分、加速、暂停、重玩等功能，这些使用<code>canvas</code>的最基本<code>API</code>就能完成了，增加什么功能，就是基于大家的<code>idea</code>了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我也是刚开始学，这是第一个小步，感觉就是<code>canvas</code>非常的强大，可以实现天马行空的效果。但是，前提是对<code>API</code>的熟练使用以及在复杂应用时，或许得需要较扎实数学知识吧。<br>当然，也可以实现很实用的工具，像<a target="_blank" rel="noopener" href="https://github.com/niklasvh/html2canvas">html2canvas</a>还有<a target="_blank" rel="noopener" href="https://echarts.apache.org/en/index.html">echarts图表</a>等等。</p>
+<p>不过，现在还差的很远，还得要慢慢学习，才能慢慢熟练<code>canvas</code>来使用。</p>
+
+    </div>
+</div>
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 109;
+        width: 600px !important;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            width: 88%
+        }
+    }
+</style>
+<script>
+    $(function () { $('#article').click(function (e) { if (e.target.tagName == "IMG") { if ($('#nonediv').length == 0) { let MImg = `<div id='noneimg'><img src='${e.target.currentSrc}'></div>`; let MDiv = "<div id='nonediv' style='cursor: pointer;display: none; position: fixed;left: 0;top: 0; right: 0;bottom: 0;background-color: #333;opacity:0.5;z-index: 108;'></div>"; $('#article').append(MDiv); $('#article').append(MImg); $("#nonediv").fadeIn("slow"); $("#noneimg img").fadeIn("slow") } } else { if ($('#nonediv').length !== 0) { $("#noneimg ").fadeOut("slow"); $("#nonediv").fadeOut("slow"); setTimeout(function () { $('#nonediv').remove(); $('#noneimg').remove() }, 500) } } }); $('.article-content').addClass('content-move') });
+</script>
+<div class="Last-Next">
+    
+
+    
+    <a href="/2021/08/03/observe-design/">
+        <div class="next">
+            <span>下一篇</span>
+            <p>JavaScript之观察者模式</p>
+        </div>
+    </a>
+    
+</div>
+		
+<link rel="stylesheet" href="/css/food.css">
+
+<div class="footer">
+	<div class="Copyright">
+		©2021 By Cola. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Aizener">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: block;
+            border-radius: 50%;
+            width: 66px;
+            height: 66px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            transition: border .5s;
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 30px;
+            height: 30px;
+            margin-top: 17.5px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $('#js-go_top').gotoTop({ offset: 500, speed: 300, animationShow: { 'transform': 'translate(0,0)', 'transition': 'transform .5s ease-in-out' }, animationHide: { 'transform': 'translate(100px,0)', 'transition': 'transform .5s ease-in-out' } });
+</script>
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+
+</html>
